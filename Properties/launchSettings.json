@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NitricEngine2D": {
+      "commandName": "Project",
+      "commandLineArgs": "editMode"
+    }
+  }
+}

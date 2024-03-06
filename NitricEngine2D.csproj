@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="bin\debug\net8.0\particles\testParticle.json" />
+    <Content Include="bin\debug\net8.0\scenes\particleTest.json" />
+    <Content Include="bin\debug\net8.0\scenes\pong.json" />
+    <Content Include="bin\Debug\net8.0\textures\myFont.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
+    <PackageReference Include="OpenTK" Version="4.8.2" />
+    <PackageReference Include="StbImageSharp" Version="2.27.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net8.0\shaders\defaultParticle.frag" />
+    <None Include="bin\Debug\net8.0\shaders\defaultParticle.vert" />
+    <None Include="bin\Debug\net8.0\shaders\defaultViewport.frag" />
+    <None Include="bin\Debug\net8.0\shaders\defaultViewport.vert" />
+    <None Include="bin\debug\net8.0\shaders\defaultSprite.frag" />
+    <None Include="bin\debug\net8.0\shaders\defaultSprite.vert" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="bin\Debug\net8.0\particles\" />
+  </ItemGroup>
+
+</Project>
