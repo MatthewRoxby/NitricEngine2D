@@ -1,0 +1,90 @@
+{
+	"window":{
+		"title": "Pong Clone",
+		"size": [1280, 720],
+		"clearColour": [0.0,0.0,0.0]
+	},
+	"debugWindows":[
+		"Profiler",
+		"HierarchyViewer",
+		"Inspector"
+	],
+	"root":
+	{
+		"type": "Viewport2D",
+		"name": "root",
+		"width": 1600,
+		"height": 900,
+		"clearColour": [0.07,0.07,0.07,1.0],
+		"children": [
+			{
+				"type": "Sprite2D",
+				"texturePath": "textures/pong_arena.png",
+				"name": "Arena",
+				"position": [0,0],
+				"rotation": 0.0
+			},
+			{
+				"type": "PongPaddle",
+				"texturePath": "textures/pong_paddle.png",
+				"name": "PaddleL",
+				"player": 0,
+				"position": [-70,0]
+			},
+			{
+				"type": "PongPaddle",
+				"texturePath": "textures/pong_paddle.png",
+				"name": "PaddleR",
+				"player": 1,
+				"position": [70,0]
+			},
+			{
+				"type": "Camera2D",
+				"name": "testCamera",
+				"position": [0,0],
+				"zoom": 0.1,
+			},
+			{
+				"type": "PongScore",
+				"name": "Score",
+				"position": [0,38],
+				"children":[
+					{
+						"type": "Sprite2D",
+						"name": "ScoreL",
+						"texturePath": "textures/pong_text.png",
+						"h_frames": 14,
+						"v_frames": 1,
+						"frame": 0,
+						"position": [-6,0]
+					},
+					{
+						"type": "Sprite2D",
+						"name": "ScoreR",
+						"texturePath": "textures/pong_text.png",
+						"h_frames": 14,
+						"v_frames": 1,
+						"frame": 0,
+						"position": [6,0]
+					}
+				]
+			},
+			{
+				"type": "PongBall",
+				"texturePath": "textures/pong_ball.png",
+				"name": "Ball",
+				"rotation": 0,
+				"modulate": [1.0,0.0,0.0,1.0],
+				"position": [0,0]
+			},
+			{
+				"type": "PongBall",
+				"texturePath": "textures/pong_ball.png",
+				"name": "Ball2",
+				"rotation": 0,
+				"modulate": [0.0,1.0,0.0,1.0],
+				"position": [0,20]
+			}
+		]
+	}
+}

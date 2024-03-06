@@ -1,0 +1,31 @@
+{
+	"window":{
+		"title": "Particle Test",
+		"size": [1600,900],
+		"clearColour": [0.0,0.0,0.0]
+	},
+	"debugWindows":[
+		"Profiler",
+		"HierarchyViewer",
+		"Inspector"
+	],
+	"root":{
+		"type": "Viewport2D",
+		"name": "root",
+		"width": 1600,
+		"height": 900,
+		"clearColour": [0.1,0.1,0.1,1.0],
+		"children":[
+			{
+				"type": "Camera2D",
+				"name": "cam"
+			},
+			{
+				"type": "ParticleEmitter",
+				"name": "Particle",
+				"rotation_degrees": 90.0,
+				"dataPath": "particles/testParticle.json"
+			}
+		]
+	}
+}

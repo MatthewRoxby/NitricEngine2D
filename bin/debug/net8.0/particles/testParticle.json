@@ -1,0 +1,27 @@
+{
+	"numParticles": 10010,
+	"lifetime": 2.0,
+	"texturePath": "textures/circle.png",
+	"emissionRate": 1000.0,
+	"effects":[
+		{
+			"type": "AccelerationEffect",
+			"acceleration": [0,-980]
+		},
+		{
+			"type": "InitialVelocityEffect",
+			"startVelocity": 300.0,
+			"spread": 360.0
+		},
+		{
+			"type": "RingPlacementEffect",
+			"minRadius": 0,
+			"maxRadius": 0
+		},
+		{
+			"type": "AnimatedScaleEffect",
+			"startScale": [1.0,1.0],
+			"endScale": [0.0,0.0]
+		}
+	]
+}
