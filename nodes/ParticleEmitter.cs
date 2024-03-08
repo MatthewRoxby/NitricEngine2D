@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using NitricEngine2D.loaders;
 using NitricEngine2D.particle_effects;
+using OpenTK.Mathematics;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -14,6 +15,7 @@ namespace NitricEngine2D.nodes
         public float s_x, s_y;
         public float rot;
         public float time;
+        public Color4 c;
     }
 
     public class ParticleEmitter : VisibleNode2D
@@ -33,10 +35,13 @@ namespace NitricEngine2D.nodes
 
         private float emissionCooldown = 0f;
 
+        public bool emitting = false, autostart = false;
+
         public override void Update(float deltaTime)
         {
-            emissionCooldown += deltaTime;
-            while(emissionCooldown > (1f / emissionRate) && deadParticles.Count > 0)
+            if(emitting) emissionCooldown += deltaTime;
+
+            while (emissionCooldown > (1f / emissionRate) && deadParticles.Count > 0 && emitting)
             {
                 emissionCooldown -= (1f / emissionRate);
 
@@ -50,6 +55,7 @@ namespace NitricEngine2D.nodes
                 p.rot = 0;
                 p.s_x = 1;
                 p.s_y = 1;
+                p.c = Color4.White;
                 foreach (ParticleEffect effect in effects)
                 {
                     effect.ParticleSpawn(this, p);
@@ -84,6 +90,7 @@ namespace NitricEngine2D.nodes
             {
                 aliveParticles.Remove(p);
                 deadParticles.Enqueue(p);
+                
             }
 
 
@@ -93,6 +100,8 @@ namespace NitricEngine2D.nodes
         public override void ExposeToInspector()
         {
             base.ExposeToInspector();
+
+            ImGui.Checkbox("emitting", ref emitting);
 
             ImGui.Text($"number of alive particles: {aliveParticles.Count} \n number of dead particles: {deadParticles.Count}");
 
@@ -125,6 +134,7 @@ namespace NitricEngine2D.nodes
             this.lifetime = Helper.JSONGetPropertyFloat(root, "lifetime", 1f);
             this.texture = TextureLoader.LoadTexture(Helper.JSONGetPropertyString(root, "texturePath", null));
             this.emissionRate = Helper.JSONGetPropertyFloat(root, "emissionRate", 1f);
+            this.autostart = Helper.JSONGetPropertyBool(root, "autostart", false);
 
             JsonElement effects;
             if(root.TryGetProperty("effects", out effects))
@@ -151,6 +161,7 @@ namespace NitricEngine2D.nodes
 
         public override void Begin()
         {
+            emitting = autostart;
             deadParticles.EnsureCapacity(this.numParticles);
             for(int i = 0; i < this.numParticles; i++)
             {

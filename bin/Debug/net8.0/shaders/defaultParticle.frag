@@ -6,6 +6,7 @@ out vec4 fragColour;
 
 uniform sampler2D albedo;
 uniform int textureEnabled;
+uniform vec4 modulate;
 
 void main(){
 	vec4 t = vec4(1.0,1.0,1.0,1.0);
@@ -13,6 +14,7 @@ void main(){
 		t = texture(albedo, pass_uv);
 	}
 	
+	
 
-	fragColour = vec4(t);
+	fragColour = vec4(modulate * t);
 }

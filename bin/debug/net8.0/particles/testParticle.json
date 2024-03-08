@@ -6,7 +6,7 @@
 	"effects":[
 		{
 			"type": "AccelerationEffect",
-			"acceleration": [0,-980]
+			"acceleration": [0,0]
 		},
 		{
 			"type": "InitialVelocityEffect",
@@ -19,9 +19,15 @@
 			"maxRadius": 0
 		},
 		{
-			"type": "AnimatedScaleEffect",
-			"startScale": [1.0,1.0],
-			"endScale": [0.0,0.0]
+			"type": "AnimatedColourEffect",
+			"gradient":{
+				"interpolation": "linear",
+				"steps": [
+					{"col": [1.0,0.0,0.0,1.0], "pos": 0},
+					{"col": [0.0,1.0,0.0,1.0], "pos": 0.9},
+					{"col": [1.0,0.0,0.0,0.0], "pos": 1.0},
+				]
+			}
 		}
 	]
 }

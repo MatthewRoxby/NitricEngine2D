@@ -238,6 +238,7 @@ namespace NitricEngine2D
             {
                 Matrix4 t = Helper.createTransformation(new Vector2(p.x, p.y), new Vector2(p.s_x, p.s_y), p.rot, emitter.z_index);
                 shader.SetUniformMatrix("transformation", false, t);
+                shader.SetUniform4("modulate", p.c);
 
                 GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
             }

@@ -113,5 +113,17 @@ namespace NitricEngine2D
             result *= Matrix4.CreateTranslation(new Vector3(position.X, position.Y, -1 - z_index));
             return result;
         }
+
+        public static Color4 LerpColor(Color4 a, Color4 b, float t)
+        {
+            Vector4 va = (Vector4)a;
+            Vector4 vb = (Vector4)b;
+            return (Color4)Vector4.Lerp(va, vb, t);
+        }
+
+        public static uint Color4ToImguiColour(Color4 col)
+        {
+            return ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(col.R, col.G, col.B, col.A));
+        }
     }
 }

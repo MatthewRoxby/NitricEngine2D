@@ -90,7 +90,7 @@ namespace NitricEngine2D.shaders
 
     public class DefaultParticleShader : Shader
     {
-        public DefaultParticleShader() : base(ShaderLoader.LoadShader("shaders/defaultParticle.vert", "shaders/defaultParticle.frag"), new string[] { "aspect", "transformation", "projection", "view", "albedo", "textureEnabled" })
+        public DefaultParticleShader() : base(ShaderLoader.LoadShader("shaders/defaultParticle.vert", "shaders/defaultParticle.frag"), new string[] { "aspect", "transformation", "projection", "view", "albedo", "textureEnabled", "modulate" })
         {
 
         }

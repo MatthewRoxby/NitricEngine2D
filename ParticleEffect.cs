@@ -107,7 +107,7 @@ namespace NitricEngine2D.particle_effects
 
         public override void ExposeToInspector()
         {
-            if (ImGui.TreeNode("Animated velocity effect"))
+            if (ImGui.TreeNode("Animated scale effect"))
             {
                 startScale = Helper.ImguiDragFloat2("start velocity", 0.1f, startScale);
                 endScale = Helper.ImguiDragFloat2("end velocity", 0.1f, endScale);
@@ -152,6 +152,39 @@ namespace NitricEngine2D.particle_effects
             {
                 startVelocity = Helper.ImguiDragFloat2("start velocity", 0.1f, startVelocity);
                 endVelocity = Helper.ImguiDragFloat2("end velocity", 0.1f, endVelocity);
+                ImGui.TreePop();
+            }
+        }
+    }
+
+    public class AnimatedColourEffect : ParticleEffect
+    {
+        Gradient colourGradient;
+
+        public AnimatedColourEffect(JsonElement data) : base(data)
+        {
+            JsonElement grad;
+            if(data.TryGetProperty("gradient", out grad))
+            {
+                colourGradient = new Gradient(grad);
+            }
+            else
+            {
+                colourGradient = Gradient.GetDefault();
+            }
+        }
+
+
+        public override void Update(ParticleEmitter emitter, Particle p, float deltaTime)
+        {
+            p.c = colourGradient.SampleAt(p.time / emitter.lifetime);
+        }
+
+        public override void ExposeToInspector()
+        {
+            if (ImGui.TreeNode("Animated colour effect"))
+            {
+                colourGradient.ExposeToInspector();
                 ImGui.TreePop();
             }
         }
