@@ -79,7 +79,7 @@ namespace NitricEngine2D.particle_effects
             if (ImGui.TreeNode("Initial velocity effect"))
             {
                 ImGui.DragFloat("initial velocity", ref startVelocity);
-                ImGui.DragFloat("spread", ref spread);
+                ImGui.DragFloat("spread", ref spread, 1f, 0f, 360f);
                 ImGui.TreePop();
             }
         }
@@ -87,21 +87,26 @@ namespace NitricEngine2D.particle_effects
 
     public class AnimatedScaleEffect : ParticleEffect
     {
-        private Vector2 startScale, endScale;
-
+        BezierCurve curve;
 
 
         public AnimatedScaleEffect(JsonElement data) : base(data)
         {
-            this.startScale = Helper.JSONGetPropertyVec2(data, "startScale", Vector2.Zero);
-            this.endScale = Helper.JSONGetPropertyVec2(data, "endScale", Vector2.Zero);
+            JsonElement c;
+            if(data.TryGetProperty("curve", out c))
+            {
+                this.curve = new BezierCurve(c);
+            }
+            else
+            {
+                this.curve = BezierCurve.GetDefault();
+            }
         }
 
         public override void Update(ParticleEmitter emitter, Particle p, float deltaTime)
         {
-            Vector2 s = Vector2.Lerp(startScale, endScale, p.time / emitter.lifetime);
-            p.s_x = s.X;
-            p.s_y = s.Y;
+            p.s_x = curve.SampleAt(p.time / emitter.lifetime);
+            p.s_y = curve.SampleAt(p.time / emitter.lifetime);
             base.Update(emitter, p, deltaTime);
         }
 
@@ -109,8 +114,7 @@ namespace NitricEngine2D.particle_effects
         {
             if (ImGui.TreeNode("Animated scale effect"))
             {
-                startScale = Helper.ImguiDragFloat2("start velocity", 0.1f, startScale);
-                endScale = Helper.ImguiDragFloat2("end velocity", 0.1f, endScale);
+                curve.ExposeToInspector();
                 ImGui.TreePop();
             }
 
@@ -120,26 +124,35 @@ namespace NitricEngine2D.particle_effects
 
     public class AnimatedVelocityEffect : ParticleEffect
     {
-        private Vector2 startVelocity;
-        private Vector2 endVelocity;
+        private BezierCurve curve;
+        private float spread;
+        Random rand = new Random();
 
         public AnimatedVelocityEffect(JsonElement data) : base(data)
         {
-            this.startVelocity = Helper.JSONGetPropertyVec2(data, "startVelocity", Vector2.Zero);
-            this.endVelocity = Helper.JSONGetPropertyVec2(data, "endVelocity", Vector2.Zero);
+            this.spread = Helper.JSONGetPropertyFloat(data, "spread", 0f);
+            JsonElement c;
+            if(data.TryGetProperty("curve", out c))
+            {
+                this.curve = new BezierCurve(c);
+            }
+            else
+            {
+                this.curve = BezierCurve.GetDefault();
+            }
         }
 
         public override void ParticleSpawn(ParticleEmitter emitter, Particle p)
         {
-            p.v_x = startVelocity.X;
-            p.v_y = startVelocity.Y;
-
+            float a = MathHelper.DegreesToRadians((int)emitter.rotation_degrees + rand.Next((int)(-spread / 2), (int)(spread / 2)));
+            p.v_x = 0.01f * MathF.Cos(a);
+            p.v_y = 0.01f * MathF.Sin(a);
             base.ParticleSpawn(emitter, p);
         }
 
         public override void Update(ParticleEmitter emitter, Particle p, float deltaTime)
         {
-            Vector2 v = Vector2.Lerp(startVelocity, endVelocity, p.time / emitter.lifetime);
+            Vector2 v = new Vector2(p.v_x, p.v_y).Normalized() * curve.SampleAt(p.time / emitter.lifetime);
             p.v_x = v.X;
             p.v_y = v.Y;
 
@@ -150,8 +163,9 @@ namespace NitricEngine2D.particle_effects
         {
             if (ImGui.TreeNode("Animated velocity effect"))
             {
-                startVelocity = Helper.ImguiDragFloat2("start velocity", 0.1f, startVelocity);
-                endVelocity = Helper.ImguiDragFloat2("end velocity", 0.1f, endVelocity);
+                ImGui.DragFloat("spread", ref spread, 1f, 0f, 360f);
+                curve.ExposeToInspector();
+
                 ImGui.TreePop();
             }
         }

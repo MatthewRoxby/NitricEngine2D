@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using OpenTK.Audio.OpenAL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Desktop;
 using System;
@@ -109,15 +110,8 @@ namespace NitricEngine2D
             {
                 interpolation = (interpolation == INTERPOLATION_TYPE.LINEAR) ? INTERPOLATION_TYPE.CONSTANT : INTERPOLATION_TYPE.LINEAR;
             }
-            /*
-            for(int i = 0; i < steps.Count; i++)
-            {
-                GradientStep gs = steps[i];
-                ImGui.DragFloat("position##" + i.ToString(), ref  gs.position, 0.1f, 0f, 1f);
-                //ImGui.SameLine();
-                gs.colour = Helper.ImguiColourEdit4("colour##" + i.ToString(), gs.colour);
-            }
-            */
+
+            ImGui.Text("Left click to select steps\nright click and drag to move");
 
             ImDrawListPtr drawList = ImGui.GetWindowDrawList();
             System.Numerics.Vector2 bar_pos = ImGui.GetCursorScreenPos();
@@ -148,50 +142,65 @@ namespace NitricEngine2D
             for(int i = 0; i < sortedSteps.Count; i++)
             {
                 GradientStep step = sortedSteps[i];
-                drawList.AddCircleFilled(bar_pos + new System.Numerics.Vector2(bar_size.X * step.position, bar_size.Y), 10f, Helper.Color4ToImguiColour(step.colour));
-                drawList.AddCircle(bar_pos + new System.Numerics.Vector2(bar_size.X * step.position, bar_size.Y), 10f, Helper.Color4ToImguiColour((step == editor_selection)? Color4.White: Color4.Black));
+                System.Numerics.Vector2 circlePos = bar_pos + new System.Numerics.Vector2(bar_size.X * step.position, bar_size.Y);
+                drawList.AddCircleFilled(circlePos, 10f, Helper.Color4ToImguiColour(step.colour));
+                drawList.AddCircle(circlePos, 10f, Helper.Color4ToImguiColour((step == editor_selection)? Color4.White: Color4.Black));
 
-                
             }
-            int selectedStep = 0;
 
-            ImGui.SetCursorScreenPos(bar_pos - System.Numerics.Vector2.UnitX * 10f);
-            if (ImGui.InvisibleButton("gradientSelector", bar_size + System.Numerics.Vector2.One * 20f))
+            if (ImGui.IsMouseClicked(ImGuiMouseButton.Left))
             {
-                System.Numerics.Vector2 mouse = ImGui.GetMousePos();
-                float x = (mouse.X - bar_pos.X) / bar_size.X;
-
-                GradientStep selected = null;
-
-                foreach(GradientStep step in sortedSteps)
+                
+                float x = (ImGui.GetMousePos().X - bar_pos.X) / bar_size.X;
+                if (x >= 0f && x <= 1f && ImGui.GetMousePos().Y > bar_pos.Y && ImGui.GetMousePos().Y < bar_pos.Y + bar_size.Y + 10f)
                 {
-                    if(MathF.Abs(step.position - x) < 0.05)
+                    editor_selection = null;
+                    foreach (GradientStep step in steps)
                     {
-                        
-                        selected = step;
-                        break;
+                        if (MathF.Abs(step.position - x) < 0.05f)
+                        {
+                            editor_selection = step;
+                            break;
+                        }
+                    }
+
+                    if (editor_selection == null)
+                    {
+                        GradientStep newStep = new GradientStep() { colour = SampleAt(x), position = x };
+                        steps.Add(newStep);
+                        editor_selection = newStep;
+                    } 
+                }
+            }
+
+            if (ImGui.IsMouseDown(ImGuiMouseButton.Right))
+            {
+                float x = (ImGui.GetMousePos().X - bar_pos.X) / bar_size.X;
+                if (x >= 0f && x <= 1f && ImGui.GetMousePos().Y > bar_pos.Y && ImGui.GetMousePos().Y < bar_pos.Y + bar_size.Y + 10f)
+                {
+                    if(editor_selection != null)
+                    {
+                        editor_selection.position = x;
                     }
                 }
-
-                if(selected == null)
-                {
-                    //create new step
-                    selected = new GradientStep() { colour = SampleAt(x), position = x };
-                    steps.Add(selected);
-                }
-
-                editor_selection = selected;
             }
 
-            if(editor_selection == null)
+
+
+            ImGui.SetCursorScreenPos(bar_pos + bar_size);
+            ImGui.NewLine();
+
+            
+
+
+            if (editor_selection == null)
             {
                 ImGui.Text("No step selected!");
             }
             else
             {
-                ImGui.DragFloat("step position", ref editor_selection.position, 0.01f, 0f, 1f);
                 editor_selection.colour = Helper.ImguiColourEdit4("step colour", editor_selection.colour);
-                if(ImGui.Button("delete step"))
+                if(ImGui.Button("delete step") && steps.Count > 1)
                 {
                     steps.Remove(editor_selection);
                     editor_selection = null;

@@ -125,5 +125,15 @@ namespace NitricEngine2D
         {
             return ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(col.R, col.G, col.B, col.A));
         }
+
+        public static System.Numerics.Vector2 FromOpentkVec2(Vector2 value) 
+        {
+            return new System.Numerics.Vector2(value.X, value.Y);
+        }
+
+        public static Vector2 FromNumericsVec2(System.Numerics.Vector2 value)
+        {
+            return new Vector2(value.X, value.Y);
+        }
     }
 }

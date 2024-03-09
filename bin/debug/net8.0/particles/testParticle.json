@@ -3,30 +3,43 @@
 	"lifetime": 2.0,
 	"texturePath": "textures/circle.png",
 	"emissionRate": 1000.0,
+	"autostart": true,
 	"effects":[
 		{
-			"type": "AccelerationEffect",
-			"acceleration": [0,0]
-		},
-		{
-			"type": "InitialVelocityEffect",
-			"startVelocity": 300.0,
-			"spread": 360.0
+			"type": "AnimatedVelocityEffect",
+			"spread": 360.0,
+			"curve":{
+				"magnitude": 300.0,
+				"start": 0.0,
+				"end": 0.0,
+				"cp1": [0.0,1.0],
+				"cp2": [1.0,1.0]
+			}
 		},
 		{
 			"type": "RingPlacementEffect",
-			"minRadius": 0,
-			"maxRadius": 0
+			"minRadius": 400,
+			"maxRadius": 400
 		},
 		{
 			"type": "AnimatedColourEffect",
 			"gradient":{
 				"interpolation": "linear",
 				"steps": [
-					{"col": [1.0,0.0,0.0,1.0], "pos": 0},
-					{"col": [0.0,1.0,0.0,1.0], "pos": 0.9},
-					{"col": [1.0,0.0,0.0,0.0], "pos": 1.0},
+					{"col": [1.0,1.0,1.0,1.0], "pos": 0},
+					{"col": [1.0,0.0,0.0,1.0], "pos": 0.5},
+					{"col": [1.0,0.0,0.0,0.0], "pos": 1.0}
 				]
+			}
+		},
+		{
+			"type": "AnimatedScaleEffect",
+			"curve":{
+				"start": 1.0,
+				"end": 0.0,
+				"magnitude": 5.0,
+				"cp1": [1.0, 1.0],
+				"cp2": [1.0, 1.0]
 			}
 		}
 	]
