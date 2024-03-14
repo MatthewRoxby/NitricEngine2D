@@ -14,6 +14,11 @@ namespace NitricEngine2D.nodes
         public VisibleNode2D(JsonElement data) : base(data)
         {
             this.visible = Helper.JSONGetPropertyBool(data, "visible", true);
+            JsonElement shaderData;
+            if(data.TryGetProperty("shader", out shaderData))
+            {
+                this.shader = new Shader(shaderData);
+            }
         }
 
         public override void Render(float deltaTime)

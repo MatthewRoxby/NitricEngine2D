@@ -26,6 +26,12 @@
 				"name": "Particle",
 				"rotation_degrees": 90.0,
 				"dataPath": "particles/testParticle.json"
+			},
+			{
+				"type": "AudioSource",
+				"name": "music",
+				"audio": "sounds/incognito_mono.wav",
+				"autostart": true
 			}
 		]
 	}

@@ -5,6 +5,9 @@ using NitricEngine2D.nodes;
 
 namespace NitricEngine2D.game_nodes
 {
+    /// <summary>
+    /// a game class that defines a pong paddle
+    /// </summary>
     public class PongPaddle : Sprite2D
     {
 

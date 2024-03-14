@@ -7,6 +7,9 @@ using System.Text.Json;
 
 namespace NitricEngine2D.nodes
 {
+    /// <summary>
+    /// class for a particle
+    /// </summary>
     public class Particle
     {
         //MUST BE KEPT AS LEAN AS POSSIBLE
@@ -18,6 +21,9 @@ namespace NitricEngine2D.nodes
         public Color4 c;
     }
 
+    /// <summary>
+    /// a node class that emits particles
+    /// </summary>
     public class ParticleEmitter : VisibleNode2D
     {
         public List<Particle> aliveParticles = new List<Particle>();

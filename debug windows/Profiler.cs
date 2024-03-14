@@ -2,6 +2,9 @@
 
 namespace NitricEngine2D.debug_windows
 {
+    /// <summary>
+    /// debug window that provides information on the performance of the application
+    /// </summary>
     public class Profiler : DebugWindow
     {
         int FPS;
@@ -18,14 +21,17 @@ namespace NitricEngine2D.debug_windows
 
         const int GRAPH_ITEMS = 100;
 
+        //graph data is stored as a queue so that old data can be efficiently discarded
         Queue<float> deltaGraph = new Queue<float>();
         Queue<float> FPSgraph = new Queue<float>();
 
+        //should the profiler show information in terms of FPS or milliseconds?
         bool showFPS = true;
 
         public override void Update(float deltaTime)
         {
             totalFrames++;
+            //allows for a certain amount of setup frames as these will have really long times
             if(totalFrames < 0) { return; }
 
 

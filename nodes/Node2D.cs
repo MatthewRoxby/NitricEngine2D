@@ -4,6 +4,9 @@ using System.Text.Json;
 
 namespace NitricEngine2D.nodes
 {
+    /// <summary>
+    /// A base node for 2d transformation
+    /// </summary>
     public class Node2D : Node
     {
         public Vector2 position = Vector2.Zero;
@@ -25,6 +28,10 @@ namespace NitricEngine2D.nodes
 
         }
 
+        /// <summary>
+        /// creates an instance of Node2D based on JSON data
+        /// </summary>
+        /// <param name="data"></param>
         public Node2D(JsonElement data) : base(data)
         {
             this.position = Helper.JSONGetPropertyVec2(data, "position", Vector2.Zero);
@@ -38,6 +45,7 @@ namespace NitricEngine2D.nodes
         {
             local_transformation = Helper.createTransformation(position, scale, rotation_degrees, z_index);
 
+            //hierarchical transformations
             //Debug.WriteLine($"Node {name} has parent: {parent?.name}");
             if (parent is Node2D)
             {
@@ -52,6 +60,7 @@ namespace NitricEngine2D.nodes
             Vector3 t = global_transformation.ExtractTranslation();
             Vector3 s = global_transformation.ExtractScale();
             Vector3 r;
+            //extract global coords
             global_transformation.ExtractRotation().ToEulerAngles(out r);
 
             global_position = new Vector2(t.X, t.Y);

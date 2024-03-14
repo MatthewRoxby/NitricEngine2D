@@ -61,7 +61,8 @@ namespace NitricEngine2D
             {
                 HotReload();
             }
-            currentRoot?.Update(deltaTime);
+            if(currentRoot?.state != Node.STATE.PAUSED) currentRoot?.Update(deltaTime);
+
         }
 
         public static void HotReload()
@@ -77,6 +78,10 @@ namespace NitricEngine2D
         public static void Quit()
         {
             currentRoot?.End();
+            AudioLoader.CleanUp();
+            MeshLoader.CleanUp();
+            ShaderLoader.CleanUp();
+            TextureLoader.CleanUp();
         }
     }
 }

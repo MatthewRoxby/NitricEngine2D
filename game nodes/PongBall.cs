@@ -4,6 +4,9 @@ using System.Text.Json;
 
 namespace NitricEngine2D.game_nodes
 {
+    /// <summary>
+    /// A game class that defines a pong ball
+    /// </summary>
     public class PongBall : Sprite2D
     {
         public Vector2 direction;

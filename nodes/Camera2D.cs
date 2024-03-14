@@ -1,10 +1,14 @@
 ﻿using ImGuiNET;
+using OpenTK.Audio.OpenAL;
 using OpenTK.Mathematics;
 using System.Diagnostics;
 using System.Text.Json;
 
 namespace NitricEngine2D.nodes
 {
+    /// <summary>
+    /// A 2d class that defines an orthographic camera
+    /// </summary>
     public class Camera2D : Node2D
     {
         public float zoom = 1f;
@@ -60,6 +64,8 @@ namespace NitricEngine2D.nodes
         public override void Update(float deltaTime)
         {
             
+            AL.Listener(ALListener3f.Position, global_position.X, global_position.Y, 0f);
+            //Debug.WriteLine($"{ALC.GetError(ALC.GetContextsDevice(ALC.GetCurrentContext())).ToString()}");
 
             zoom = MathHelper.Clamp(zoom, 0.001f, 100f);
             Vector2 v = new Vector2(width, height) * zoom;
@@ -81,7 +87,7 @@ namespace NitricEngine2D.nodes
 
             ImGui.DragFloat("zoom", ref zoom, 0.1f, 0.1f, 100f);
 
-            ImGui.Text($"projection: \n{projection.ToString()}");
+            ImGui.Text($"OpenAL listener position: \n{AL.GetListener(ALListener3f.Position).ToString()}");
         }
     }
 }

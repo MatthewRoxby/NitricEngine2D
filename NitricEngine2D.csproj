@@ -12,11 +12,16 @@
     <Content Include="bin\debug\net8.0\particles\testParticle.json" />
     <Content Include="bin\debug\net8.0\scenes\particleTest.json" />
     <Content Include="bin\debug\net8.0\scenes\pong.json" />
+    <Content Include="bin\Debug\net8.0\sounds\incognito_mono.wav" />
+    <Content Include="bin\Debug\net8.0\sounds\Inevitable Doom.wav" />
+    <Content Include="bin\Debug\net8.0\sounds\incognito.wav" />
+    <Content Include="bin\Debug\net8.0\sounds\avd.wav" />
     <Content Include="bin\Debug\net8.0\textures\myFont.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.90.1.1" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="OpenTK" Version="4.8.2" />
     <PackageReference Include="StbImageSharp" Version="2.27.13" />
   </ItemGroup>

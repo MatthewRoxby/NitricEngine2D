@@ -11,9 +11,9 @@ namespace NitricEngine2D
     {
         private static Viewport2D? renderViewport = null;
 
-        public static DefaultSpriteShader defaultSpriteShader = new DefaultSpriteShader();
-        public static DefaultViewportShader defaultViewportShader = new DefaultViewportShader();
-        public static DefaultParticleShader defaultParticleShader = new DefaultParticleShader();
+        public static Shader defaultSpriteShader = new Shader("shaders/defaultSprite.vert", "shaders/defaultSprite.frag");
+        public static Shader defaultViewportShader = new Shader("shaders/defaultViewport.vert", "shaders/defaultViewport.frag");
+        public static Shader defaultParticleShader = new Shader("shaders/defaultParticle.vert", "shaders/defaultParticle.frag");
 
         public static bool wireframe { get; private set; } = false;
 

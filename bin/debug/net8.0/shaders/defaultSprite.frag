@@ -10,6 +10,7 @@ uniform int textureEnabled;
 uniform vec4 modulate;
 
 void main(){
+	//sampling texture if one is enabled
 	vec4 t = vec4(1.0,1.0,1.0,1.0);
 	if(textureEnabled == 1){
 		t = texture(albedo, pass_uv);

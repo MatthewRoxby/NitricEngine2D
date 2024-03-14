@@ -4,6 +4,9 @@ using System.Text.Json;
 
 namespace NitricEngine2D.game_nodes
 {
+    /// <summary>
+    /// a game class that defines a score counter for pong
+    /// </summary>
     internal class PongScore : Node2D
     {
         Sprite2D sprite_l, sprite_r;

@@ -12,6 +12,8 @@ uniform vec2 aspect;
 out vec2 pass_uv;
 
 void main(){
+	//texture aspect taken into account
 	gl_Position = vec4(aPos * vec3(aspect, 1.0), 1.0);
+	//UV y flip because idk I have to
 	pass_uv = vec2(aUV.x, 1.0 - aUV.y);
 }
