@@ -1,7 +1,7 @@
 NitricEngine 2D
 ===
 
-![logo](https://imgur.com/a/G2dQBQO)
+<img src="bin/Debug/net8.0/NElogo.png" alt="logo" width="200"/>
 
 A 2d engine written in C# by nitricswight
 
