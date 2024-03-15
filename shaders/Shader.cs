@@ -23,7 +23,7 @@ namespace NitricEngine2D.shaders
 
             if(v != null && f != null)
             {
-                this.program = ShaderLoader.LoadShader(f, v);
+                this.program = ShaderLoader.LoadShader(v, f);
             }
             else
             {
@@ -34,6 +34,7 @@ namespace NitricEngine2D.shaders
             JsonElement uniformData;
             if(data.TryGetProperty("uniforms", out uniformData))
             {
+                Use();
                 foreach(JsonElement u in uniformData.EnumerateArray())
                 {
                     SetUniformFromJSON(u);
@@ -47,6 +48,7 @@ namespace NitricEngine2D.shaders
             string uniType = Helper.JSONGetPropertyString(data, "type", null);
             if(uniName != null && uniType != null)
             {
+                //Debug.WriteLine($"loading uniform with name {uniName} and type {uniType}");
                 switch (uniType)
                 {
                     case "vec2":
@@ -65,6 +67,10 @@ namespace NitricEngine2D.shaders
                         SetUniform4(uniName, Helper.JSONGetPropertyColour(data, "value", Color4.White));
                         break;
                 }
+            }
+            else
+            {
+                Debug.WriteLine($"could not load uniform with name {uniName} and type {uniType}");
             }
         }
 

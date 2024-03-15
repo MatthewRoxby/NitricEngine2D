@@ -95,6 +95,17 @@ namespace NitricEngine2D
             return defaultValue;
         }
 
+        public static Color4 JSONGetPropertyColourNoAlpha(JsonElement element, string name, Color4 defaultValue)
+        {
+            JsonElement property;
+            if (element.TryGetProperty(name, out property))
+            {
+                return new Color4(property[0].GetSingle(), property[1].GetSingle(), property[2].GetSingle(), 1f);
+            }
+
+            return defaultValue;
+        }
+
         public static float wrapFloat(float value, float minValue, float maxValue)
         {
             if(minValue > maxValue)

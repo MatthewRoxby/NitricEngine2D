@@ -9,7 +9,8 @@ namespace NitricEngine2D
 {
     public static class Renderer
     {
-        private static Viewport2D? renderViewport = null;
+        public static Viewport2D? renderViewport { get; private set; } = null;
+        public static Camera2D? renderCamera { get; private set; } = null;
 
         public static Shader defaultSpriteShader = new Shader("shaders/defaultSprite.vert", "shaders/defaultSprite.frag");
         public static Shader defaultViewportShader = new Shader("shaders/defaultViewport.vert", "shaders/defaultViewport.frag");
@@ -60,16 +61,13 @@ namespace NitricEngine2D
         public static void SetViewport(Viewport2D viewport)
         {
             renderViewport = viewport;
+            renderCamera = (viewport == null) ? renderCamera : viewport.renderCamera;
             GL.Viewport(0,0, (viewport == null)? GameManager.windowWidth : viewport.width, (viewport == null)? GameManager.windowHeight : viewport.height);
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, (viewport == null)? 0 : viewport.frameBuffer);
         }
 
         public static void RenderSprite(Sprite2D sprite)
         {
-            if(renderViewport == null)
-            {
-                Debug.WriteLine("NO VIEWPORT SET, RENDER SKIPPED");
-            }
 
 
             if(sprite_vao == -1)
@@ -81,7 +79,7 @@ namespace NitricEngine2D
             if (shader == null) shader = defaultSpriteShader;
 
             shader.Use();
-
+            shader.SetUniform1("time", GameManager.gameTime);
 
             //set shader uniforms
             
@@ -100,10 +98,10 @@ namespace NitricEngine2D
 
             shader.SetUniformMatrix("transformation", false, sprite.global_transformation);
 
-            if (renderViewport.renderCamera != null)
+            if (renderCamera != null)
             {
-                shader.SetUniformMatrix("projection", false, renderViewport.renderCamera.projection);
-                shader.SetUniformMatrix("view", false, renderViewport.renderCamera.view);
+                shader.SetUniformMatrix("projection", false, renderCamera.projection);
+                shader.SetUniformMatrix("view", false, renderCamera.view);
             }
             else
             {
@@ -188,11 +186,6 @@ namespace NitricEngine2D
 
         public static void RenderParticles(ParticleEmitter emitter)
         {
-            if (renderViewport == null)
-            {
-                Debug.WriteLine("NO VIEWPORT SET, RENDER SKIPPED");
-            }
-
 
             if (sprite_vao == -1)
             {
@@ -218,10 +211,10 @@ namespace NitricEngine2D
 
             
 
-            if (renderViewport.renderCamera != null)
+            if (renderCamera != null)
             {
-                shader.SetUniformMatrix("projection", false, renderViewport.renderCamera.projection);
-                shader.SetUniformMatrix("view", false, renderViewport.renderCamera.view);
+                shader.SetUniformMatrix("projection", false, renderCamera.projection);
+                shader.SetUniformMatrix("view", false, renderCamera.view);
             }
             else
             {

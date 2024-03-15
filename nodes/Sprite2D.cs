@@ -28,9 +28,15 @@ namespace NitricEngine2D.nodes
             this.modulate = Helper.JSONGetPropertyColour(data, "modulate", Color4.White);
         }
 
+        public override void Update(float deltaTime)
+        {
+            AABB = new Box2() { Center = global_position, HalfSize = global_scale };
+            base.Update(deltaTime);
+        }
+
         public override void Render(float deltaTime)
         {
-            if (!visible) return;
+            if (!computedVisible) return;
 
             //Debug.WriteLine(position);
             Renderer.RenderSprite(this);

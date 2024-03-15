@@ -25,13 +25,30 @@
 				"type": "ParticleEmitter",
 				"name": "Particle",
 				"rotation_degrees": 90.0,
-				"dataPath": "particles/testParticle.json"
+				"dataPath": "particles/testParticle.json",
 			},
 			{
 				"type": "AudioSource",
 				"name": "music",
 				"audio": "sounds/incognito_mono.wav",
 				"autostart": true
+			},
+			{
+				"type": "Sprite2D",
+				"name": "CustomShaderTest",
+				"texturePath": "textures/myFont.png",
+				"scale": [50.0,50.0],
+				"shader":{
+					"vertexPath": "shaders/testShader.vert",
+					"fragmentPath": "shaders/testShader.frag",
+					"uniforms":[
+						{
+							"name": "b",
+							"type": "vec4",
+							"value": [1.0,1.0,0.0,1.0]
+						}
+					]
+				}
 			}
 		]
 	}

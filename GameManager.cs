@@ -15,6 +15,8 @@ namespace NitricEngine2D
 
         public static bool EDIT_MODE = false;
 
+        public static float gameTime = 0f;
+
         public static List<string> NODE_NAMESPACES = new List<string>();
 
         public static void SetEditMode(bool b = true)
@@ -57,6 +59,7 @@ namespace NitricEngine2D
 
         public static void Update(float deltaTime)
         {
+            gameTime += deltaTime;
             if(Input.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.LeftAlt) && Input.IsKeyPressed(OpenTK.Windowing.GraphicsLibraryFramework.Keys.R) && EDIT_MODE)
             {
                 HotReload();

@@ -1,9 +1,12 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Windowing.Common.Input;
 using NitricEngine2D.loaders;
 using System.Text.Json;
+using StbImageSharp;
+using System.Runtime.CompilerServices;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace NitricEngine2D
 {
@@ -16,6 +19,7 @@ namespace NitricEngine2D
 
         public Window(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings() { Size = new Vector2i(width, height), Title = title})
         {
+            
             Unload += Window_Unload;
             RenderFrame += Window_RenderFrame;
             UpdateFrame += Window_UpdateFrame;
@@ -24,8 +28,17 @@ namespace NitricEngine2D
             TextInput += Window_TextInput;
             MouseWheel += Window_MouseWheel;
             CenterWindow();
+            LoadIcon("NElogo.png");
             GameManager.windowWidth = width;
             GameManager.windowHeight = height;
+        }
+
+        public void LoadIcon(string path)
+        {
+            
+            ImageResult icon = ImageResult.FromStream(File.OpenRead(path));
+            OpenTK.Windowing.Common.Input.Image i = new OpenTK.Windowing.Common.Input.Image(icon.Width, icon.Height, icon.Data);
+            this.Icon = new OpenTK.Windowing.Common.Input.WindowIcon(i);
         }
 
         public void NewScene(string scenePath)
@@ -36,24 +49,18 @@ namespace NitricEngine2D
 
             if(doc.RootElement.TryGetProperty("window", out windowData))
             {
-                JsonElement title, size, clearCol;
-                if(windowData.TryGetProperty("title", out title))
+
+                Title = Helper.JSONGetPropertyString(windowData, "title", "Unnamed Scene");
+                if (GameManager.EDIT_MODE)
                 {
-                    Title = title.GetString();
-                    if (GameManager.EDIT_MODE) {
-                        Title += "   [EDIT MODE]";
-                    }
+                    Title += "   [EDIT MODE]";
                 }
 
-                if(windowData.TryGetProperty("size", out size)){
-                    Size = new Vector2i(size[0].GetInt32(), size[1].GetInt32());
-                }
+                Size = (Vector2i)Helper.JSONGetPropertyVec2(windowData, "size", new Vector2(800, 450));
 
-                if(windowData.TryGetProperty("clearColour", out clearCol))
-                {
-                    clearColour = new Color4(clearCol[0].GetSingle(), clearCol[1].GetSingle(), clearCol[2].GetSingle(), 1f);
-                    
-                }
+                clearColour = Helper.JSONGetPropertyColourNoAlpha(windowData, "clearColour", Color4.Black);
+
+                LoadIcon(Helper.JSONGetPropertyString(windowData, "iconPath", "NElogo.png"));
             }
         }
 

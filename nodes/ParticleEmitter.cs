@@ -45,6 +45,7 @@ namespace NitricEngine2D.nodes
 
         public override void Update(float deltaTime)
         {
+            AABB = new Box2() { Center = global_position, Size = AABB.Size };
             if(emitting) emissionCooldown += deltaTime;
 
             while (emissionCooldown > (1f / emissionRate) && deadParticles.Count > 0 && emitting)
@@ -173,13 +174,36 @@ namespace NitricEngine2D.nodes
             {
                 deadParticles.Enqueue(new Particle());
             }
+            RegenerateAABB();
             base.Begin();
 
         }
 
+        public void RegenerateAABB(int gen_time = 10, int resolution = 30)
+        {
+            float delta = (1f) / resolution;
+
+            float min_x = global_position.X, min_y = global_position.Y, max_x = global_position.X, max_y = global_position.Y;
+            emitting = true;
+            for(int i = 0; i < gen_time * resolution; i++)
+            {
+                Update(delta);
+                foreach(Particle p in aliveParticles)
+                {
+                    if(p.x < min_x) min_x = p.x;
+                    if(p.x > max_x) max_x = p.x;
+                    if(p.y < min_y) min_y = p.y;
+                    if(p.y > max_y) max_y = p.y;
+                }
+            }
+            emitting = autostart;
+
+            AABB = new Box2() { Center = global_position, Size = new Vector2(max_x - min_x, max_y - min_y)};
+        }
+
         public override void Render(float deltaTime)
         {
-            if (!visible) return;
+            if (!computedVisible) return;
 
             Renderer.RenderParticles(this);
 

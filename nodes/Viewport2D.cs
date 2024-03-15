@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace NitricEngine2D.nodes
@@ -61,6 +62,7 @@ namespace NitricEngine2D.nodes
 
         public override void Update(float deltaTime)
         {
+            AABB = new Box2(-1000000, -1000000, 1000000, 100000);
             if(renderCamera != null)
             {
                 renderCamera.width = width;
@@ -71,9 +73,10 @@ namespace NitricEngine2D.nodes
 
         public override void Render(float deltaTime)
         {
-            
+            if (!visible) return;
 
             Renderer.SetViewport(this);
+            //Debug.WriteLine("before: " + (Renderer.renderViewport == null));
             GL.ClearColor(clearColour);
             
             if(!disableColourClear)GL.Clear(ClearBufferMask.ColorBufferBit);
@@ -82,6 +85,7 @@ namespace NitricEngine2D.nodes
             base.Render(deltaTime);
 
             Renderer.SetViewport(null);
+            //Debug.WriteLine("after: " + (Renderer.renderViewport == null));
 
             Renderer.RenderViewport(this);
         }

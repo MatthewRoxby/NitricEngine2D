@@ -11,6 +11,9 @@ namespace NitricEngine2D.nodes
     /// </summary>
     public class Camera2D : Node2D
     {
+        const float CAMERA_VISIBILITY_BORDER = 1.1f;
+        public Box2 bounds { get; private set; }
+
         public float zoom = 1f;
 
         public float near, far;
@@ -71,6 +74,8 @@ namespace NitricEngine2D.nodes
             Vector2 v = new Vector2(width, height) * zoom;
             projection = Matrix4.CreateOrthographic(v.X, v.Y, near, far);
 
+            bounds = new Box2() { Center = global_position, Size = v * CAMERA_VISIBILITY_BORDER};
+
 
             float r = MathHelper.DegreesToRadians(global_rotation);
 
@@ -87,7 +92,7 @@ namespace NitricEngine2D.nodes
 
             ImGui.DragFloat("zoom", ref zoom, 0.1f, 0.1f, 100f);
 
-            ImGui.Text($"OpenAL listener position: \n{AL.GetListener(ALListener3f.Position).ToString()}");
+            ImGui.Text($"Bounds: \n{bounds.ToString()}");
         }
     }
 }

@@ -6,9 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <ApplicationIcon>NElogo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="bin\Debug\net8.0\NElogo.png" />
     <Content Include="bin\debug\net8.0\particles\testParticle.json" />
     <Content Include="bin\debug\net8.0\scenes\particleTest.json" />
     <Content Include="bin\debug\net8.0\scenes\pong.json" />
@@ -17,6 +19,7 @@
     <Content Include="bin\Debug\net8.0\sounds\incognito.wav" />
     <Content Include="bin\Debug\net8.0\sounds\avd.wav" />
     <Content Include="bin\Debug\net8.0\textures\myFont.png" />
+    <Content Include="NElogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +36,8 @@
     <None Include="bin\Debug\net8.0\shaders\defaultViewport.vert" />
     <None Include="bin\debug\net8.0\shaders\defaultSprite.frag" />
     <None Include="bin\debug\net8.0\shaders\defaultSprite.vert" />
+    <None Include="bin\debug\net8.0\shaders\testShader.frag" />
+    <None Include="bin\debug\net8.0\shaders\testShader.vert" />
   </ItemGroup>
 
   <ItemGroup>
