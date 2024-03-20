@@ -1,5 +1,4 @@
 ﻿using ImGuiNET;
-using NitricEngine2D.shaders;
 using OpenTK.Mathematics;
 using System.Diagnostics;
 using System.Text.Json;

@@ -36,6 +36,8 @@
     <None Include="bin\Debug\net8.0\shaders\defaultViewport.vert" />
     <None Include="bin\debug\net8.0\shaders\defaultSprite.frag" />
     <None Include="bin\debug\net8.0\shaders\defaultSprite.vert" />
+    <None Include="bin\debug\net8.0\shaders\panelShader.frag" />
+    <None Include="bin\debug\net8.0\shaders\panelShader.vert" />
     <None Include="bin\debug\net8.0\shaders\testShader.frag" />
     <None Include="bin\debug\net8.0\shaders\testShader.vert" />
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace NitricEngine2D
 
         Color4 clearColour;
 
-        public Window(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings() { Size = new Vector2i(width, height), Title = title})
+        public Window(int width, int height, string title) : base(GameWindowSettings.Default, new NativeWindowSettings() { ClientSize = new Vector2i(width, height), Title = title})
         {
             
             Unload += Window_Unload;
@@ -27,6 +27,7 @@ namespace NitricEngine2D
             Resize += Window_Resize;
             TextInput += Window_TextInput;
             MouseWheel += Window_MouseWheel;
+            controller = new ImGuiController(ClientSize.X, ClientSize.Y);
             CenterWindow();
             LoadIcon("NElogo.png");
             GameManager.windowWidth = width;
@@ -90,7 +91,7 @@ namespace NitricEngine2D
             GL.Enable(EnableCap.CullFace);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
-            controller = new ImGuiController(ClientSize.X, ClientSize.Y);
+            
 
             GameManager.EndSceneLoad();
         }

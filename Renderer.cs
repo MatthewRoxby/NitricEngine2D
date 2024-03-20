@@ -2,7 +2,6 @@
 using OpenTK.Mathematics;
 using NitricEngine2D.loaders;
 using NitricEngine2D.nodes;
-using NitricEngine2D.shaders;
 using System.Diagnostics;
 
 namespace NitricEngine2D

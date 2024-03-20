@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 using System.Text.Json;
 using System.Diagnostics;
 
-namespace NitricEngine2D.shaders
+namespace NitricEngine2D
 {
     public class Shader
     {
