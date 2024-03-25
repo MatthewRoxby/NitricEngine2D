@@ -19,3 +19,14 @@ obj/Debug/net8.0/NitricEngine2D.GeneratedMSBuildEditorConfig.editorconfig
 obj/Debug/net8.0/NitricEngine2D.GlobalUsings.g.cs
 obj/Debug/net8.0/NitricEngine2D.pdb
 obj/Debug/net8.0/NitricEngine2D.sourcelink.json
+bin/Debug/net8.0/imgui.ini
+bin/Debug/net8.0/NitricEngine2D.exe
+obj/Debug/net8.0/apphost.exe
+obj/Debug/net8.0/NitricEngine2D.csproj.BuildWithSkipAnalyzers
+obj/Debug/net8.0/SpaceRPGThing.AssemblyInfo.cs
+obj/Debug/net8.0/SpaceRPGThing.csproj.BuildWithSkipAnalyzers
+obj/Debug/net8.0/SpaceRPGThing.csproj.CopyComplete
+obj/Debug/net8.0/SpaceRPGThing.csproj.FileListAbsolute.txt
+obj/Debug/net8.0/SpaceRPGThing.GeneratedMSBuildEditorConfig.editorconfig
+obj/Debug/net8.0/SpaceRPGThing.GlobalUsings.g.cs
+obj/Debug/net8.0/SpaceRPGThing.pdb
