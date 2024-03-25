@@ -42,7 +42,7 @@ namespace NitricEngine2D
             windows.Clear();
         }
 
-        public static T GetWindow<T>() where T : DebugWindow
+        public static T? GetWindow<T>() where T : DebugWindow
         {
             foreach(DebugWindow window in windows)
             {
